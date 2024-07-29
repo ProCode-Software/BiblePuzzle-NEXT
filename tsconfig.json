@@ -3,7 +3,7 @@
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"target": "ES2020",
-		"jsx": "react",
+		"jsx": "preserve",
 		"noImplicitAny": false,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,

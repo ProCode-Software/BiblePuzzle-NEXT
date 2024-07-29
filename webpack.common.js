@@ -1,13 +1,17 @@
+const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require('path')
-const p = path.join(__dirname, "src/ts/");
+const p = path.resolve(__dirname, "src/ts/");
 
-module.exports = {
-    entry: {
-        app: [`${p}index.ts`, `${p}typing.ts`],
-        firebase: `${p}firebase.ts`,
-        menu: [`${p}sidebar.ts`, `${p}header.ts`],
-    },
+const files = ['index', 'typing', 'settings', 'sidebar', 'header', 'firebase']
+const entries = {}
+for (const fn of files) {
+    entries.entry[fn] = path.resolve(__dirname, 'src/ts', `${fn}.ts`)
+}
+
+const config = {
     module: {
+        entry: entries,
         rules: [
             {
                 test: /\.tsx?$/,
@@ -28,8 +32,14 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, "src/html/index.html")
+        }),
+    ],
     output: {
         filename: "[name].js",
-        path: path.resolve(__dirname, "js"),
+        path: path.resolve(__dirname, "src/js"),
     },
 };
+module.exports = config
